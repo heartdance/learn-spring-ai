@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  ai:
+    openai:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode
+      api-key: sk-xxx
+      chat:
+        options:
+          # qwen3-max-preview、qwen-plus、qwen3-32b、deepseek-r1-distill-qwen-32b
+          model: qwen3-32b
+    chat:
+      client:
+        observations:
+          log-prompt: true
+
+logging:
+  level:
+    root: info
+    org:
+      springframework:
+        ai:
+          chat:
+            client:
+              advisor: info
