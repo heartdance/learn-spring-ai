@@ -2,6 +2,8 @@ package org.example.chat.controller;
 
 import org.example.chat.config.tool.DateTimeTools;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -13,6 +15,9 @@ import java.io.IOException;
 public class ChatController {
 
     private final ChatClient chatClient;
+
+    @Autowired
+    private SyncMcpToolCallbackProvider toolCallbackProvider;
 
     public ChatController(ChatClient chatClient) {
         this.chatClient = chatClient;
@@ -45,6 +50,14 @@ public class ChatController {
     public String testTools() {
         return chatClient.prompt("设置一个十分钟后的闹钟")
                 .tools(new DateTimeTools())
+                .call()
+                .content();
+    }
+
+    @GetMapping("test/mcp")
+    public String testMcp() {
+        return chatClient.prompt("当前时间")
+                .toolCallbacks(toolCallbackProvider)
                 .call()
                 .content();
     }

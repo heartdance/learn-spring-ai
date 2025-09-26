@@ -8,12 +8,18 @@ spring:
       api-key: sk-xxx
       chat:
         options:
-          # qwen3-max-preview、qwen-plus、qwen3-32b、deepseek-r1-distill-qwen-32b
+          # qwen3-max-preview/qwen-plus/qwen3-32b/deepseek-r1-distill-qwen-32b
           model: qwen3-32b
     chat:
       client:
         observations:
           log-prompt: true
+    mcp:
+      client:
+        sse:
+          connections:
+            server1:
+              url: http://localhost:8081
 
 logging:
   level:
