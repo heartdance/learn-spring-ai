@@ -1,0 +1,13 @@
+server:
+  port: 8082
+
+spring:
+  profiles:
+    active: dev
+  ai:
+    openai:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode
+      api-key: sk-xxx
+      embedding:
+        options:
+          model: text-embedding-v4
