@@ -2,6 +2,7 @@ package org.example.chat.controller;
 
 import org.example.chat.config.tool.DateTimeTools;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,9 @@ public class ChatController {
 
     @Autowired
     private SyncMcpToolCallbackProvider toolCallbackProvider;
+
+    @Autowired
+    private QuestionAnswerAdvisor questionAnswerAdvisor;
 
     public ChatController(ChatClient chatClient) {
         this.chatClient = chatClient;
@@ -58,6 +62,14 @@ public class ChatController {
     public String testMcp() {
         return chatClient.prompt("当前时间")
                 .toolCallbacks(toolCallbackProvider)
+                .call()
+                .content();
+    }
+
+    @GetMapping("test/rag")
+    public String testRag() {
+        return chatClient.prompt("每天的工作时间")
+                .advisors(questionAnswerAdvisor)
                 .call()
                 .content();
     }
